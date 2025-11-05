@@ -2,13 +2,16 @@ class JoinGame extends HTMLElement {
     constructor() {
         super();
 
-        const shadow = this.attachShadow({mode: 'open'});
+        this.shadow = this.attachShadow({mode: 'open'});
 
-        shadow.innerHTML = `
+        this.shadow.innerHTML = `
             <div class="container">
                 <app-input id="username" placeholder="Enter username"></app-input>
                 <app-input id="gamecode" placeholder="Enter code"></app-input>
-                <app-button type="primary">Join Game</app-button>
+                <div class="buttons-container">
+                    <app-button id="back-btn" type="secondary">Back</app-button>
+                    <app-button type="primary" style="flex: 1">Join Game</app-button>
+                </div>
             </div>
         `;
 
@@ -26,14 +29,24 @@ class JoinGame extends HTMLElement {
                 
                 display: flex;
                 flex-direction: column;
-                
                 justify-content: center;
                 
                 gap: 1ch;
             }
-        `;
+            
+            .buttons-container {
+                display: flex;
+                gap: 1ch;
+            }     
+            `;
 
-        shadow.appendChild(style);
+        this.shadow.appendChild(style);
+    }
+
+    connectedCallback() {
+        this.shadow.querySelector('#back-btn').addEventListener('click', () => {
+            window.dispatchEvent(new CustomEvent('navigate', { detail: { page: 'home' } }));
+        });
     }
 }
 customElements.define('join-game', JoinGame);
