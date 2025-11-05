@@ -12,6 +12,8 @@ class Button extends HTMLElement {
                 padding: 0.33rem;
                 border-radius: 0.33rem;
                 cursor: pointer;
+                
+                text-align: center;
             }
             
             :host([type="primary"]) {

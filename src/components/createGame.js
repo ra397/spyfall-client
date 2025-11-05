@@ -1,12 +1,41 @@
+import './button.js';
+import './input.js';
+
 class CreateGame extends HTMLElement {
     constructor() {
         super();
 
         const shadow = this.attachShadow({mode: 'open'});
 
-        shadow.textContent = `
-            Create Game
+        shadow.innerHTML = `
+            <div class="container">
+                <app-input id="username" placeholder="Enter username"></app-input>
+                <app-button type="primary">Create Game</app-button>
+            </div>
         `;
+
+        const style = document.createElement('style');
+        style.textContent = `
+            :host {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+            }
+            
+            .container {
+                width: 20ch;
+                
+                display: flex;
+                flex-direction: column;
+                
+                justify-content: center;
+                
+                gap: 1ch;
+            }
+        `;
+
+        shadow.appendChild(style);
     }
 }
 
