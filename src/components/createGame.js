@@ -12,8 +12,9 @@ class CreateGame extends HTMLElement {
                 <app-input id="username" placeholder="Enter username"></app-input>
                 <div class="buttons-container">
                     <app-button id="back-btn" type="secondary">Back</app-button>
-                    <app-button type="primary" style="flex: 1">Create Game</app-button>
+                    <app-button id="submit-btn" type="primary" style="flex: 1">Create Game</app-button>
                 </div>
+                <span id="error-message"></span>
             </div>
         `;
 
@@ -39,7 +40,15 @@ class CreateGame extends HTMLElement {
             .buttons-container {
                 display: flex;
                 gap: 1ch;
-            } 
+            }
+            
+            #error-message {
+                color: #856404;
+                background-color: #fff3cd;
+                border-color: #ffeeba;
+                border-radius: 0.25rem;
+                padding: 0.15rem 1ch;
+            }
         `;
 
         this.shadow.appendChild(style);
@@ -49,6 +58,11 @@ class CreateGame extends HTMLElement {
         this.shadow.querySelector('#back-btn').addEventListener('click', () => {
             window.dispatchEvent(new CustomEvent('navigate', { detail: { page: 'home' } }));
         });
+
+        this.shadow.querySelector('#submit-btn').addEventListener('click', () => {
+            const username = this.shadow.querySelector('#username').value.trim();
+            window.dispatchEvent(new CustomEvent('create-game', { detail: { player_name: username} }));
+        })
     }
 }
 
