@@ -20,6 +20,7 @@ window.addEventListener('create-game', (event) => {
                 uid: response.uid,
                 game_code: response.game_code,
                 game_owner: response.game_owner,
+                players: response.players,
                 page: 'lobby',
             })
         }
@@ -50,6 +51,12 @@ window.addEventListener('join-game', (event) => {
             })
         }
     });
+});
+
+window.addEventListener('start-round', (event) => {
+    console.log(event.detail.duration);
+    console.log(state.players.length);
+    // TODO: check if there are enough players
 });
 
 socket.on("player_joined", (data) => {
