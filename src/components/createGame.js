@@ -1,5 +1,6 @@
 import './button.js';
 import './input.js';
+import {updateState} from "../state/stateManager.js";
 
 class CreateGame extends HTMLElement {
     constructor() {
@@ -48,6 +49,8 @@ class CreateGame extends HTMLElement {
                 border-color: #ffeeba;
                 border-radius: 0.25rem;
                 padding: 0.15rem 1ch;
+                
+                display: none;
             }
         `;
 
@@ -56,13 +59,23 @@ class CreateGame extends HTMLElement {
 
     connectedCallback() {
         this.shadow.querySelector('#back-btn').addEventListener('click', () => {
-            window.dispatchEvent(new CustomEvent('navigate', { detail: { page: 'home' } }));
+            updateState({
+                page: 'home',
+            })
         });
 
         this.shadow.querySelector('#submit-btn').addEventListener('click', () => {
             const username = this.shadow.querySelector('#username').value.trim();
             window.dispatchEvent(new CustomEvent('create-game', { detail: { player_name: username} }));
-        })
+        });
+
+        const error_message = this.shadow.querySelector('#error-message');
+        window.addEventListener('stateUpdated', (e) => {
+            if (state.error) {
+                error_message.textContent = state.error_message;
+                error_message.style.display = 'inline-block';
+            }
+        });
     }
 }
 

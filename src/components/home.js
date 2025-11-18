@@ -1,4 +1,5 @@
 import './button.js';
+import { updateState } from "../state/stateManager.js";
 
 class Home extends HTMLElement {
     constructor() {
@@ -54,10 +55,14 @@ class Home extends HTMLElement {
 
     connectedCallback() {
         this.shadow.querySelector('#create-game-btn').addEventListener('click', (e) => {
-            window.dispatchEvent(new CustomEvent('navigate', { detail: { page: 'create' } }));
+            updateState({
+                page: 'create',
+            })
         });
         this.shadow.querySelector('#join-game-btn').addEventListener('click', (e) => {
-            window.dispatchEvent(new CustomEvent('navigate', { detail: { page: 'join' } }));
+            updateState({
+                page: 'join',
+            })
         });
     }
 }

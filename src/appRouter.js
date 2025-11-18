@@ -1,6 +1,7 @@
 import './components/home.js';
 import './components/createGame.js';
 import './components/joinGame.js';
+import './components/lobby.js';
 
 class AppRouter extends HTMLElement {
     constructor() {
@@ -9,6 +10,7 @@ class AppRouter extends HTMLElement {
             home: '<app-home></app-home>',
             create: '<create-game></create-game>',
             join: '<join-game></join-game>',
+            lobby: '<app-lobby></app-lobby>',
         };
 
         this.shadow = this.attachShadow({ mode: 'open' });
@@ -17,9 +19,11 @@ class AppRouter extends HTMLElement {
     }
 
     connectedCallback() {
-        window.addEventListener('navigate', (e) => {
-            this.currentRoute = e.detail.page;
-            this.render();
+        window.addEventListener('stateUpdated', (e) => {
+            if (this.currentRoute !== state.page) {
+                this.currentRoute = state.page;
+                this.render();
+            }
         });
     }
 
