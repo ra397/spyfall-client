@@ -13,7 +13,8 @@ class Lobby extends HTMLElement {
                 <time-selector></time-selector>
                 <app-button id="submit-btn" type="primary">Start Round</app-button>
                 
-                <!-- TODO: implement error message for game owner starting round -->
+                <!-- TODO: refactor error message into its own component -->
+                <span id="error-message"></span>
             </div>
         `;
 
@@ -30,6 +31,16 @@ class Lobby extends HTMLElement {
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
+        }
+        
+        #error-message {
+            color: #856404;
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+            border-radius: 0.25rem;
+            padding: 0.15rem 1ch;
+            
+            display: none;
         }
         `;
 
@@ -50,7 +61,7 @@ class Lobby extends HTMLElement {
             window.dispatchEvent(new CustomEvent('start-round', {
                 detail: { duration: this.timeSelector.getTime() },
             }))
-        })
+        });
     }
 
     render() {

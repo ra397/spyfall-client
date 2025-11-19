@@ -54,11 +54,44 @@ window.addEventListener('join-game', (event) => {
 });
 
 window.addEventListener('start-round', (event) => {
-    console.log(event.detail.duration);
-    console.log(state.players.length);
-    // TODO: check if there are enough players
+    const duration = event.detail.duration;
+    socket.emit("start_round", {
+        uid: state.uid,
+        duration: duration,
+    }, (response) => {
+        if (response.status === 'error') {
+
+        } else {
+
+        }
+    });
+});
+
+window.addEventListener('end-round', (event) => {
+    socket.emit("end_round", {
+
+    }, (response) => {
+        if (response.status === 'error') {
+
+        } else {
+
+        }
+    });
 });
 
 socket.on("player_joined", (data) => {
     updateState({players: data.players});
+});
+
+socket.on("round_started", (data) => {
+    updateState({
+        location: data.location,
+        occupation: data.occupation,
+        duration: data.duration,
+        page: 'game',
+    });
+});
+
+socket.on("round_ended", (data) => {
+
 });

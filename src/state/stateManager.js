@@ -1,9 +1,15 @@
 const state = {
-    uid: '',
-    game_code: '',
-    game_owner: null,
-    players: [],
     page: 'home',
+
+    uid: '',
+    game_owner: null,
+
+    game_code: '',
+    location: '',
+    occupation: '',
+    duration: null,
+    players: [],
+
     error: false,
     error_message: '',
 };

@@ -2,6 +2,7 @@ import './components/home.js';
 import './components/createGame.js';
 import './components/joinGame.js';
 import './components/lobby.js';
+import './components/game.js';
 
 class AppRouter extends HTMLElement {
     constructor() {
@@ -11,6 +12,7 @@ class AppRouter extends HTMLElement {
             create: '<create-game></create-game>',
             join: '<join-game></join-game>',
             lobby: '<app-lobby></app-lobby>',
+            game: '<app-game></app-game>',
         };
 
         this.shadow = this.attachShadow({ mode: 'open' });
