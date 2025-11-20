@@ -1,6 +1,7 @@
 import './button.js';
 import './input.js';
 import {updateState} from "../state/stateManager.js";
+import "./error.js";
 
 class CreateGame extends HTMLElement {
     constructor() {
@@ -15,7 +16,7 @@ class CreateGame extends HTMLElement {
                     <app-button id="back-btn" type="secondary">Back</app-button>
                     <app-button id="submit-btn" type="primary" style="flex: 1">Create Game</app-button>
                 </div>
-                <span id="error-message"></span>
+                <error-message></error-message>
             </div>
         `;
 
@@ -42,16 +43,6 @@ class CreateGame extends HTMLElement {
                 display: flex;
                 gap: 1ch;
             }
-            
-            #error-message {
-                color: #856404;
-                background-color: #fff3cd;
-                border-color: #ffeeba;
-                border-radius: 0.25rem;
-                padding: 0.15rem 1ch;
-                
-                display: none;
-            }
         `;
 
         this.shadow.appendChild(style);
@@ -69,11 +60,12 @@ class CreateGame extends HTMLElement {
             window.dispatchEvent(new CustomEvent('create-game', { detail: { player_name: username} }));
         });
 
-        const error_message = this.shadow.querySelector('#error-message');
         window.addEventListener('stateUpdated', (e) => {
+            const error = this.shadow.querySelector('error-message');
             if (state.error) {
-                error_message.textContent = state.error_message;
-                error_message.style.display = 'inline-block';
+                error.message = state.error_message;
+            } else {
+                error.message = '';
             }
         });
     }

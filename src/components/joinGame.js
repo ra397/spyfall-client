@@ -1,4 +1,5 @@
 import {updateState} from "../state/stateManager.js";
+import "./error.js";
 
 class JoinGame extends HTMLElement {
     constructor() {
@@ -14,7 +15,7 @@ class JoinGame extends HTMLElement {
                     <app-button id="back-btn" type="secondary">Back</app-button>
                     <app-button id="submit-btn" type="primary" style="flex: 1">Join Game</app-button>
                 </div>
-                <span id="error-message"></span>
+                <error-message></error-message>
             </div>
         `;
 
@@ -41,16 +42,6 @@ class JoinGame extends HTMLElement {
                 display: flex;
                 gap: 1ch;
             }
-            
-            #error-message {
-                color: #856404;
-                background-color: #fff3cd;
-                border-color: #ffeeba;
-                border-radius: 0.25rem;
-                padding: 0.15rem 1ch;
-                
-                display: none;
-            }
             `;
 
         this.shadow.appendChild(style);
@@ -69,11 +60,12 @@ class JoinGame extends HTMLElement {
             window.dispatchEvent(new CustomEvent('join-game', { detail: { player_name: username, game_code: code } }));
         });
 
-        const error_message = this.shadow.querySelector('#error-message');
         window.addEventListener("stateUpdated", () => {
-           if (state.error) {
-               error_message.textContent = state.error_message;
-               error_message.style.display = 'inline-block';
+            const error = this.shadow.querySelector('error-message');
+            if (state.error) {
+                error.message = state.error_message;
+           } else {
+                error.message = '';
            }
         });
     }

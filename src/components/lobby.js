@@ -1,4 +1,5 @@
 import './timeSelector.js';
+import './error.js';
 
 class Lobby extends HTMLElement {
     constructor() {
@@ -12,9 +13,7 @@ class Lobby extends HTMLElement {
                 <div id="players-list"></div>
                 <time-selector></time-selector>
                 <app-button id="submit-btn" type="primary">Start Round</app-button>
-                
-                <!-- TODO: refactor error message into its own component -->
-                <span id="error-message"></span>
+                <error-message></error-message>
             </div>
         `;
 
@@ -31,16 +30,6 @@ class Lobby extends HTMLElement {
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
-        }
-        
-        #error-message {
-            color: #856404;
-            background-color: #fff3cd;
-            border-color: #ffeeba;
-            border-radius: 0.25rem;
-            padding: 0.15rem 1ch;
-            
-            display: none;
         }
         `;
 
@@ -74,6 +63,13 @@ class Lobby extends HTMLElement {
         } else {
             this.timeSelector.style.display = 'none';
             this.submitBtn.style.display = 'none';
+        }
+
+        const error = this.shadow.querySelector('error-message');
+        if (state.error) {
+            error.message = state.error_message;
+        } else {
+            error.message = '';
         }
     }
 }

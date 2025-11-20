@@ -7,7 +7,8 @@ class Game extends HTMLElement {
         this.shadow = this.attachShadow({mode: 'open'});
         this.shadow.innerHTML = `
             <div class="container">
-                <span id="game-code"></span>
+                <span id="location"></span>
+                <span id="occupation"></span>
                 <div id="players-list"></div>
                 <countdown-timer></countdown-timer>
                 <app-button id="submit-btn" type="primary">End Round</app-button>
@@ -41,14 +42,13 @@ class Game extends HTMLElement {
         });
 
         this.shadow.getElementById('submit-btn').addEventListener('click', (e) => {
-            window.dispatchEvent(new CustomEvent('end-round', {
-
-            }));
+            window.dispatchEvent(new CustomEvent('end-round'));
         });
     }
 
     render() {
-        this.shadow.getElementById('game-code').textContent = state.game_code;
+        this.shadow.getElementById('location').textContent = state.location;
+        this.shadow.getElementById('occupation').textContent = state.occupation;
         this.shadow.getElementById('players-list').textContent = (state.players ?? []).join(", ");
 
         if (state.game_owner) {

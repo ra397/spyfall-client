@@ -35,6 +35,7 @@ window.addEventListener('join-game', (event) => {
         game_code: game_code,
     }, (response) => {
         if (response.status === 'error') {
+            console.log(response.message);
             updateState({
                 error: true,
                 error_message : response.message,
@@ -60,21 +61,33 @@ window.addEventListener('start-round', (event) => {
         duration: duration,
     }, (response) => {
         if (response.status === 'error') {
-
+            updateState({
+                error: true,
+                error_message : response.message,
+            })
         } else {
-
+            updateState({
+                error: false,
+                error_message : '',
+            })
         }
     });
 });
 
 window.addEventListener('end-round', (event) => {
     socket.emit("end_round", {
-
+        uid: state.uid,
     }, (response) => {
         if (response.status === 'error') {
-
+            updateState({
+                error: true,
+                error_message : response.message,
+            })
         } else {
-
+            updateState({
+                error: false,
+                error_message : '',
+            })
         }
     });
 });
@@ -93,5 +106,10 @@ socket.on("round_started", (data) => {
 });
 
 socket.on("round_ended", (data) => {
-
+    updateState({
+        page: 'lobby',
+        location: '',
+        occupation: '',
+        duration: null,
+    })
 });
